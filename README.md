@@ -8,7 +8,7 @@
 * Now tell tfenv to use latest wtih `tfenv use latest`
 
 * Next clone the repo from <URL>
-* Inside the folder module-aws-tf-cicd run `terraform init` and then `terraform test`
+* Inside the folder module-aws-tf-cicd run `terraform init` and then `terraform test` and you should see 2 passed and 0 failed tests
 
 
 
