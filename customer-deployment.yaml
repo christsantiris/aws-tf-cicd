@@ -1,0 +1,67 @@
+# Create AWSCloud9SSMAccessRole and AWSCloud9SSMInstanceProfile
+# If using CONNECT_SSM for Cloud9 Environment Connection Type.
+Resources:
+    AWSCloud9SSMAccessRole:
+      Type: 'AWS::IAM::Role'
+      Properties:
+        RoleName: "AWSCloud9SSMAccessRole"
+        Description: ""
+        AssumeRolePolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service:
+                  - cloud9.amazonaws.com
+                  - ec2.amazonaws.com
+              Action:
+                - 'sts:AssumeRole'
+        Path: /service-role/
+        ManagedPolicyArns:
+            - arn:aws:iam::aws:policy/AWSCloud9SSMInstanceProfile
+            - arn:aws:iam::aws:policy/AdministratorAccess
+    AWSCloud9SSMInstanceProfile:
+      Type: 'AWS::IAM::InstanceProfile'
+      Properties:
+        InstanceProfileName: AWSCloud9SSMInstanceProfile
+        Path: /cloud9/
+        Roles:
+          - !Ref AWSCloud9SSMAccessRole
+
+    TerraformAdminRole:
+      Type: 'AWS::IAM::Role'
+      Properties:
+        RoleName: "TerraformAdminRole"
+        AssumeRolePolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service:
+                  - ec2.amazonaws.com
+              Action:
+                - 'sts:AssumeRole'
+        Path: /
+        ManagedPolicyArns:
+            - arn:aws:iam::aws:policy/AdministratorAccess
+    TerraformC9InstanceProfile:
+      Type: 'AWS::IAM::InstanceProfile'
+      Properties:
+        InstanceProfileName: TerraformC9InstanceProfile
+        Path: /
+        Roles:
+          - !Ref TerraformAdminRole
+
+    TerraformC9Env:
+      Type: AWS::Cloud9::EnvironmentEC2
+      Properties:
+        Name: TerraformIDE
+        AutomaticStopTimeMinutes: 240
+        ConnectionType: CONNECT_SSM
+        Description: Cloud9 Environment to be used for this project.
+        ImageId: amazonlinux-2023-x86_64
+        InstanceType: t2.large
+        Tags:
+          - Key: "Project"
+            Value: "TerraformCICD"
+      DependsOn: AWSCloud9SSMInstanceProfile
