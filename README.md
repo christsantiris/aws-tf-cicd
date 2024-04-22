@@ -9,6 +9,22 @@
 
 * Next clone the repo from <URL>
 * Inside the folder module-aws-tf-cicd run `terraform init` and then `terraform test` and you should see 2 passed and 0 failed tests
+* run `pwd` to get the absolute path of the directory and use it to run checkov `checkov --directory /home/ec2-user/environment/aws-tf-cicd/modules/module-aws-tf-cicd`
+
+* Afer checkov runs cd into the aws-devops-core directory and run `terraform init` then `terraform plan` which should show 41 resources about to be created then `terraform apply -auto-approve`
+* Head to AWS CodePipeline and observe that the "pull code from commit" action failed because branch main does not exist because the code isn't pushed.
+* Uncomment the backend section in aws-devops-core/provider.tf and use the values from the tf output to add bucket and dynamo table values
+* Run `terraform init` and hookup the backend. Check out the s3 to see the tfstate file pushed there
+* cd back into modules/module-aws-tf-cicd and initialize git, create the main branch and connect code commit by running `git remote add origin codecommit::us-east-1://module-aws-tf-cicd` then push the code. The module validation pipeline should now run
+
+* Next trigger the pipeline for the production workload
+* cd into the production workload directory
+* update the provider.tf file backend with the production workload bucket and db from the apply output from before. Re run apply if needed
+* push the code. The pipeline should succeed
+
+* Now cd back into aws-devops-core
+* uncomment the section that says "Add Manual Approval" in the main.tf file
+* run `terraform plan then` `terraform apply -auto-approve` and confirm the prod workload pipeline now has a manual approva step before apply
 
 
 

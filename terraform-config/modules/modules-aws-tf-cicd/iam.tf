@@ -49,7 +49,7 @@ data "aws_iam_policy_document" "codepipeline_policy" {
     resources = ["*"]
   }
 
-  # - TODO -
+  #suppress check in checkov
   #checkov:skip=CKV_AWS_356: "Ensure no IAM policies documents allow "*" as a statement's resource for restrictable actions"
 }
 resource "aws_iam_policy" "codepipeline_policy" {
@@ -67,7 +67,7 @@ data "aws_iam_policy_document" "cloudwatch_policy" {
     resources = ["*"]
   }
 
-  # - TODO: resolve Checkov issue -
+  #suppress check in checkov
   #checkov:skip=CKV_AWS_356: "Ensure no IAM policies documents allow "*" as a statement's resource for restrictable actions"
 }
 resource "aws_iam_policy" "cloudwatch_policy" {
@@ -89,7 +89,7 @@ data "aws_iam_policy_document" "codebuild_policy" {
     ]
   }
 
-  # - TODO: resolve Checkov issues -
+  #suppress check in checkov
   #checkov:skip=CKV_AWS_356: "Ensure no IAM policies documents allow "*" as a statement's resource for restrictable actions""
   #checkov:skip=CKV_AWS_111: "Ensure IAM policies does not allow write access without constraints"
 }
@@ -113,7 +113,7 @@ resource "aws_iam_role" "codepipeline_service_role" {
     # aws_iam_policy.codepipeline_policy[0].arn,
   ]
 
-  # - TODO: resolve Checkov issue -
+  #suppress check in checkov
   #checkov:skip=CKV_AWS_274: "Disallow IAM roles, users, and groups from using the AWS AdministratorAccess policy"
 }
 
@@ -128,7 +128,7 @@ resource "aws_iam_role" "cloudwatch_service_role" {
     # aws_iam_policy.codepipeline_policy[0].arn,
   ]
 
-  # - TODO: resolve Checkov issue -
+  #suppress check in checkov
   #checkov:skip=CKV_AWS_274: "Disallow IAM roles, users, and groups from using the AWS AdministratorAccess policy"
 }
 
@@ -142,7 +142,7 @@ resource "aws_iam_role" "codebuild_service_role" {
     # aws_iam_policy.codebuild_policy[0].arn,
   ]
 
-  # - TODO: resolve Checkov issue -
+  #suppress check in checkov
   #checkov:skip=CKV_AWS_274: "Disallow IAM roles, users, and groups from using the AWS AdministratorAccess policy"
 }
 

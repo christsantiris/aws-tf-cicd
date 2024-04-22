@@ -40,7 +40,7 @@ resource "aws_codepipeline" "codepipeline" {
 
   tags = each.value.tags
 
-  # - TODO: resolve Checkov issue -
+  #suppress check in checkov
   #checkov:skip=CKV_AWS_219: "Ensure Code Pipeline Artifact store is using a KMS CMK"
 }
 

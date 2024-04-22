@@ -10,7 +10,7 @@ resource "aws_s3_bucket" "codepipeline_artifacts_buckets" {
   bucket   = "pipeline-artifacts-${each.value.name}-${random_string.codepipeline_artifacts_s3_buckets[each.key].result}"
   force_destroy = true
 
-  # - TODO: resolve Checkov issues -
+  #suppress check in checkov
   #checkov:skip=CKV2_AWS_62: "Ensure S3 buckets should have event notifications enabled"
   #checkov:skip=CKV2_AWS_61: "Ensure that an S3 bucket has a lifecycle configuration"
   #checkov:skip=CKV_AWS_144: "Ensure that S3 bucket has cross-region replication enabled"

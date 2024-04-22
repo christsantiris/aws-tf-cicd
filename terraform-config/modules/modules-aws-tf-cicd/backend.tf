@@ -10,7 +10,7 @@ resource "aws_s3_bucket" "tf_remote_state_s3_buckets" {
   bucket   = "${each.value.prefix}-tf-state-${random_string.tf_remote_state_s3_buckets[each.key].result}"
   force_destroy = true
 
-  # - TODO: resolve Checkov issues -
+  #suppress check in checkov
   #checkov:skip=CKV2_AWS_62: "Ensure S3 buckets should have event notifications enabled"
   #checkov:skip=CKV2_AWS_61: "Ensure that an S3 bucket has a lifecycle configuration"
   #checkov:skip=CKV_AWS_144: "Ensure that S3 bucket has cross-region replication enabled"
@@ -54,7 +54,7 @@ resource "aws_dynamodb_table" "tf_remote_state_lock_tables" {
     type = "S"
   }
 
-  # - TODO: resolve Checkov issues -
+  #suppress check in checkov
   #checkov:skip=CKV_AWS_28: "Ensure DynamoDB point in time recovery (backup) is enabled"
   #checkov:skip=CKV_AWS_119: "Ensure DynamoDB Tables are encrypted using a KMS Customer Managed CMK"
   #checkov:skip=CKV2_AWS_16: "Ensure that Auto Scaling is enabled on your DynamoDB tables"
