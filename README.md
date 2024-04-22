@@ -23,9 +23,10 @@
 * push the code. The pipeline should succeed
 
 * Now cd back into aws-devops-core
-* uncomment the section that says "Add Manual Approval" in the main.tf file
-* run `terraform plan then` `terraform apply -auto-approve` and confirm the prod workload pipeline now has a manual approva step before apply
-
+* uncomment the section that says "Add Manual Approval" in the main.tf file leaving the line for NotificationArn commented out
+* run `terraform plan then` `terraform apply -auto-approve` and confirm the prod workload pipeline now has a manual approval step before apply
+* uncomment the sns resources in main.tf
+* run `terraform apply` again and confirm the subscription via email
 
 
 

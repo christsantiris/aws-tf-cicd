@@ -1,3 +1,14 @@
+# resource "aws_sns_topic" "manual_approval_sns_topic" {
+#   name = "manual-approval-sns-topic"
+# }
+
+# resource "aws_sns_topic_subscription" "manual_approval_sns_subscription" {
+#   topic_arn = aws_sns_topic.manual_approval_sns_topic.arn
+#   protocol  = "email"
+#   endpoint  = "chris.tsantiris@gmail.com"
+# }
+
+
 module "module-aws-tf-cicd" {
   source = "../modules/module-aws-tf-cicd"
 
@@ -288,6 +299,7 @@ module "module-aws-tf-cicd" {
         #       version  = "1"
         #       configuration = {
         #          CustomData      = "Please approve this deployment."
+        #          NotificationArn = aws_sns_topic.manual_approval_sns_topic.arn
         #       }
 
         #       input_artifacts = []
