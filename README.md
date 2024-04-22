@@ -28,6 +28,19 @@
 * uncomment the sns resources in main.tf
 * run `terraform apply` again and confirm the subscription via email
 
+* Test the manual approval by navigating to the production-workload directory
+* in main.tf change the s3 bucket prefix to something like prod-resource-new or prod-resource-2
+* commit and push the change. the manual approval email should arrive if everything was done correctly
+
+* Destroying the project
+* comment out main.tf and main.tftest.hcl in the production workload directory
+* push the changes
+* in aws-devops-core directory comment out the backend block in the provider.tf file
+* run `terraform init -migrate-state` to migrate the state from s3 to local server
+* run `terraform destroy -auto-approve`
+* remove this stack from cloud formation
+
+
 
 
 

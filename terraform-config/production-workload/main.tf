@@ -10,15 +10,15 @@ data "aws_iam_policy_document" "ec2_trust_relationship" {
   }
 }
 
-resource "random_string" "example" {
+resource "random_string" "rndm" {
   length   = 4
   special  = false
   upper    = false
 }
 
 # - IAM Role -
-resource "aws_iam_role" "example" {
-  name                = "example-prod-resource-${random_string.example.result}"
+resource "aws_iam_role" "prodrole" {
+  name                = "prod-resource-${random_string.rndm.result}"
   assume_role_policy  = data.aws_iam_policy_document.ec2_trust_relationship.json
   managed_policy_arns = ["arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"]
 
@@ -29,11 +29,11 @@ resource "aws_iam_role" "example" {
 }
 
 # - S3 Bucket -
-resource "aws_s3_bucket" "example" {
-  bucket_prefix = "example-prod-resource"
+resource "aws_s3_bucket" "prdbucket" {
+  bucket_prefix = "prod-resource" // updated bucket_prefix
   force_destroy = true
 
-  # - checkov suppress -
+  # - TODO: resolve Checkov issues -
   #checkov:skip=CKV2_AWS_62: "Ensure S3 buckets should have event notifications enabled"
   #checkov:skip=CKV2_AWS_6: "Ensure that S3 bucket has a Public Access block"
   #checkov:skip=CKV2_AWS_61: "Ensure that an S3 bucket has a lifecycle configuration"
@@ -42,5 +42,6 @@ resource "aws_s3_bucket" "example" {
   #checkov:skip=CKV_AWS_145: "Ensure that S3 buckets are encrypted with KMS by default"
   #checkov:skip=CKV_AWS_144: "Ensure that S3 bucket has cross-region replication enabled"
 }
+
 
 
