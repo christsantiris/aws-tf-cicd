@@ -32,7 +32,7 @@
 * in main.tf change the s3 bucket prefix to something like prod-resource-new or prod-resource-2
 * commit and push the change. the manual approval email should arrive if everything was done correctly
 
-* Destroying the project
+# Destroying the project
 * comment out main.tf and main.tftest.hcl in the production workload directory
 * push the changes
 * in aws-devops-core directory comment out the backend block in the provider.tf file
